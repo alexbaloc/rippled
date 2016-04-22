@@ -32,10 +32,14 @@ if [ ${ubuntu_release} == "12.04" ]; then
 fi
 
 if [ ${ubuntu_release} == "14.04" ] || [ ${ubuntu_release} == "15.04" ]; then
-    apt-get install python-software-properties
+# apparently, wget needs this package first
+    apt-get -y install apt-transport-https
+    apt-get update
+# switched from python-software-properties to software-properties-common for 'add-apt-repository'
+    apt-get -y install wget software-properties-common
     echo "deb [arch=amd64] https://mirrors.ripple.com/ubuntu/ trusty stable contrib" | sudo tee /etc/apt/sources.list.d/ripple.list 
     wget -O- -q https://mirrors.ripple.com/mirrors.ripple.com.gpg.key | sudo apt-key add -
-    add-apt-repository ppa:ubuntu-toolchain-r/test
+    add-apt-repository -y ppa:ubuntu-toolchain-r/test
     apt-get update
     apt-get -y upgrade
     apt-get -y install curl git scons ctags pkg-config protobuf-compiler libprotobuf-dev libssl-dev python-software-properties boost-all-dev nodejs g++-5 g++-4.9
