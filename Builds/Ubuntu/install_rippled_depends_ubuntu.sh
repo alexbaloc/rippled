@@ -33,20 +33,20 @@ fi
 
 if [ ${ubuntu_release} == "14.04" ] || [ ${ubuntu_release} == "15.04" ]; then
     # apparently, wget needs this package first
-    apt-get -y --force-yes install apt-transport-https
-    apt-get -y --force-yes update
+    apt-get -y install apt-transport-https
+    apt-get -y update
     # switched from python-software-properties to software-properties-common for 'add-apt-repository'
     apt-get -y install wget software-properties-common
 
     # needed for g++5 
-    echo "deb http://ftp.debian.org/debian/ stretch main" >> /etc/apt/sources.list
+    #echo "deb http://ftp.debian.org/debian/ stretch main" >> /etc/apt/sources.list
 
     echo "deb [arch=amd64] https://mirrors.ripple.com/ubuntu/ trusty stable contrib" | sudo tee /etc/apt/sources.list.d/ripple.list 
     wget -O- -q https://mirrors.ripple.com/mirrors.ripple.com.gpg.key | sudo apt-key add -
     add-apt-repository -y ppa:ubuntu-toolchain-r/test
     apt-get -y update
     apt-get -y upgrade
-    apt-get -y install curl git scons ctags pkg-config protobuf-compiler libprotobuf-dev libssl-dev python-software-properties boost-all-dev nodejs g++-5 g++-4.9
+    apt-get -y --force-yes install curl git scons ctags pkg-config protobuf-compiler libprotobuf-dev libssl-dev python-software-properties boost-all-dev nodejs g++-5 g++-4.9
     update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 99 --slave /usr/bin/g++ g++ /usr/bin/g++-5
     update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 99 --slave /usr/bin/g++ g++ /usr/bin/g++-4.9
     exit 0
